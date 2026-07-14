@@ -1,5 +1,7 @@
 # opencode-aws-bedrock-auth
 
+[![npm](https://img.shields.io/npm/v/opencode-aws-bedrock-auth)](https://www.npmjs.com/package/opencode-aws-bedrock-auth)
+
 An [OpenCode](https://opencode.ai) plugin that automatically refreshes your AWS Bedrock SSO session before it expires — so your AI sessions are never interrupted by auth errors.
 
 ## How it works
@@ -12,20 +14,25 @@ An [OpenCode](https://opencode.ai) plugin that automatically refreshes your AWS 
 
 ## Installation
 
-Copy `dist/index.js` to your OpenCode global plugin directory:
-
-```sh
-cp dist/index.js ~/.config/opencode/plugin/aws-bedrock-auth.js
-```
-
-Or point OpenCode at the built file directly in your `opencode.json`.
-
-## Configuration
-
-In your `opencode.json`, ensure you have an `amazon-bedrock` provider with a `profile`:
+Add the package name to the `plugin` array in your `opencode.json`:
 
 ```json
 {
+  "$schema": "https://opencode.ai/config.json",
+  "plugin": ["opencode-aws-bedrock-auth"]
+}
+```
+
+OpenCode will install and load it automatically at startup. No file copying required.
+
+## Configuration
+
+Ensure you have an `amazon-bedrock` provider with a `profile` in your `opencode.json`:
+
+```json
+{
+  "$schema": "https://opencode.ai/config.json",
+  "plugin": ["opencode-aws-bedrock-auth"],
   "provider": {
     "amazon-bedrock": {
       "options": {
@@ -42,7 +49,7 @@ If no profile is configured, the plugin falls back to `default` and logs a warni
 
 - [AWS CLI v2](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html) installed and on `PATH`
 - An AWS SSO profile configured via `aws configure sso`
-- [OpenCode](https://opencode.ai) with the `@opencode-ai/plugin` SDK
+- [OpenCode](https://opencode.ai) v0.1.x or later
 
 ## Development
 
