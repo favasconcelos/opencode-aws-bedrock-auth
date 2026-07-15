@@ -11,6 +11,7 @@ An [OpenCode](https://opencode.ai) plugin that automatically refreshes your AWS 
 - If the session is expired, runs `aws sso login --profile <profile>` automatically
 - Re-checks every 20 minutes, throttled and deduplicated to avoid concurrent refresh races
 - Guards `bash` and `task` tool calls so they never run against an expired session
+- Exposes an `aws_refresh_token` tool for on-demand manual refresh
 
 ## Installation
 
@@ -44,6 +45,15 @@ Ensure you have an `amazon-bedrock` provider with a `profile` in your `opencode.
 ```
 
 If no profile is configured, the plugin falls back to `default` and logs a warning.
+
+## Manual refresh
+
+The plugin registers an `aws_refresh_token` tool that bypasses the 20-minute interval and forces an immediate session check. Ask the AI to run it whenever you want to refresh proactively:
+
+> "Please refresh my AWS token"
+> "Run aws_refresh_token"
+
+This is useful before kicking off a long operation, or after receiving an authentication error.
 
 ## Requirements
 
