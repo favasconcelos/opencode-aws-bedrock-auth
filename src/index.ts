@@ -1,4 +1,5 @@
 import type { Plugin, PluginInput, Config } from '@opencode-ai/plugin';
+import { tool } from '@opencode-ai/plugin';
 
 const CHECK_INTERVAL_MS = 20 * 60 * 1000; // 20 minutes
 const AWS_TOOLS = new Set(['bash', 'task']);
@@ -68,6 +69,19 @@ export default (async ({ $ }) => {
   }
 
   return {
+    tool: {
+      aws_refresh_token: tool({
+        description:
+          'Manually refresh the AWS SSO session for the configured Bedrock profile. Use this if you receive authentication errors or want to ensure the session is valid before a long operation.',
+        args: {},
+        async execute() {
+          lastCheckedAt = INITIAL_CHECKED_AT; // invalidate the cache so checkAndRefresh always runs
+          await checkAndRefresh();
+          return `AWS SSO session refreshed for profile: ${profile}`;
+        },
+      }),
+    },
+
     async config(cfg: Config & BedrockConfig): Promise<void> {
       const bedrockOptions = cfg.provider?.['amazon-bedrock']?.options;
 
