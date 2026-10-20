@@ -1,6 +1,8 @@
 # opencode-aws-bedrock-auth
 
 [![npm](https://img.shields.io/npm/v/opencode-aws-bedrock-auth)](https://www.npmjs.com/package/opencode-aws-bedrock-auth)
+[![CI](https://img.shields.io/github/actions/workflow/status/favasconcelos/opencode-aws-bedrock-auth/ci.yml?branch=main&label=CI)](https://github.com/favasconcelos/opencode-aws-bedrock-auth/actions/workflows/ci.yml)
+[![license](https://img.shields.io/npm/l/opencode-aws-bedrock-auth)](LICENSE)
 
 An [OpenCode](https://opencode.ai) plugin that automatically refreshes your AWS Bedrock SSO session before it expires — so your AI sessions are never interrupted by auth errors.
 
