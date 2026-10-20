@@ -87,12 +87,6 @@ Publishing the GitHub Release triggers the workflow, which checks that the tag m
 format check, typecheck and build, then runs `npm publish`. Mark the release as a pre-release to publish it under the
 `next` dist-tag instead of `latest`.
 
-One-time setup: register the workflow as a trusted publisher for the package.
-
-```sh
-npm trust github opencode-aws-bedrock-auth --repo favasconcelos/opencode-aws-bedrock-auth --file release.yml
-```
-
 ## License
 
 MIT
