@@ -10,17 +10,17 @@ An [OpenCode](https://opencode.ai) plugin that automatically refreshes your AWS 
 - Validates the current SSO session via `aws sts get-caller-identity`
 - If the session is expired, runs `aws sso login --profile <profile>` automatically
 - Re-checks every 20 minutes, throttled and deduplicated to avoid concurrent refresh races
-- Guards `bash` and `task` tool calls so they never run against an expired session
+- Guards `shell` and `subagent` tool calls so they never run against an expired session
 - Exposes an `aws_refresh_token` tool for on-demand manual refresh
 
 ## Installation
 
-Add the package name to the `plugin` array in your `opencode.json`:
+Add the package name to the `plugins` array in your `opencode.json`:
 
 ```json
 {
   "$schema": "https://opencode.ai/config.json",
-  "plugin": ["opencode-aws-bedrock-auth"]
+  "plugins": ["opencode-aws-bedrock-auth"]
 }
 ```
 
@@ -33,10 +33,10 @@ Ensure you have an `amazon-bedrock` provider with a `profile` in your `opencode.
 ```json
 {
   "$schema": "https://opencode.ai/config.json",
-  "plugin": ["opencode-aws-bedrock-auth"],
-  "provider": {
+  "plugins": ["opencode-aws-bedrock-auth"],
+  "providers": {
     "amazon-bedrock": {
-      "options": {
+      "settings": {
         "profile": "my-sso-profile"
       }
     }
@@ -44,7 +44,7 @@ Ensure you have an `amazon-bedrock` provider with a `profile` in your `opencode.
 }
 ```
 
-If no profile is configured, the plugin falls back to `default` and logs a warning.
+If no profile is configured, the plugin stays inactive and logs a warning.
 
 ## Manual refresh
 
@@ -59,7 +59,7 @@ This is useful before kicking off a long operation, or after receiving an authen
 
 - [AWS CLI v2](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html) installed and on `PATH`
 - An AWS SSO profile configured via `aws configure sso`
-- [OpenCode](https://opencode.ai) v0.1.x or later
+- [OpenCode](https://opencode.ai) 2.x (for OpenCode 1, use `opencode-aws-bedrock-auth@0.2.0`)
 
 ## Development
 
