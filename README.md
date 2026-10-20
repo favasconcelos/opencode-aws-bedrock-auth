@@ -72,6 +72,27 @@ npm run fmt        # oxfmt (writes)
 npm run fmt:check  # oxfmt (CI check, no writes)
 ```
 
+## Releasing
+
+Releases are published to npm from GitHub with [trusted publishing](https://docs.npmjs.com/trusted-publishers)
+(no npm token). The workflow is `.github/workflows/release.yml`.
+
+```sh
+npm version patch|minor|major -m "chore(release): %s"   # bumps package.json, commits, tags vX.Y.Z
+git push --follow-tags
+gh release create vX.Y.Z --generate-notes
+```
+
+Publishing the GitHub Release triggers the workflow, which checks that the tag matches `package.json`, runs lint,
+format check, typecheck and build, then runs `npm publish`. Mark the release as a pre-release to publish it under the
+`next` dist-tag instead of `latest`.
+
+One-time setup: register the workflow as a trusted publisher for the package.
+
+```sh
+npm trust github opencode-aws-bedrock-auth --repo favasconcelos/opencode-aws-bedrock-auth --file release.yml
+```
+
 ## License
 
 MIT
